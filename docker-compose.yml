@@ -16,14 +16,17 @@ services:
     container_name: pure-ftpd
     ports:
       - "21:21"
+      # see FTP_PASSIVE_PORTS, make sure to bind to the SAME EXACT ports
       - "30000-30009:30000-30009"
     volumes:
       # make sure you actually create these:
       - "/home/pure-ftpd/ftpusers:/home/ftpusers"
       - "/home/pure-ftpd/passwd:/etc/pure-ftpd/passwd"
     environment:
-      # set IP of your docker host as PUBLICHOST in commandline or UI
-      # PUBLICHOST: "<DOCKER_HOST_IP_GOES_HERE>"
+      # set IP of your docker host as PUBLICHOST
+      PUBLICHOST: "localhost"
+      # Passive ports should be set to be the same as the host
+      FTP_PASSIVE_PORTS: "30000:30009"
       FTP_USER_NAME: "ftpuser"
       FTP_USER_PASS: "ftpuser"
       FTP_USER_HOME: "/home/ftpusers"
